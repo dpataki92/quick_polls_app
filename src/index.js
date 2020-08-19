@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:3000"
-const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
+const LOGIN_URL = `${BASE_URL}/sessions`
 
 document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
