@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<title>Quick Polls</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="light-grey">
+
+<!-- Top container -->
+<div class="bar top black large" style="z-index:4">
+  <span class="bar-item right"><i class="fa fa-bars"></i></span>
+</div>
+
+
+<!-- !PAGE CONTENT! -->
+<div class="main" style="margin-left:10px;margin-top:43px;">
+
+  <!-- Header -->
+  <br>
+    <h4><b id="welcome">My Dashboard</b></h4>
+
+ 
+    <div class="quarter">
+      <div class="container teal padding-16" id="createPoll">
+        <div class="left"><i class="fa fa-share-alt xxxlarge"></i></div>
+        <div class="right">
+          <h3>23</h3>
+        </div>
+        <div class="clear"></div>
+        <h4>Create A Poll</h4>
+      </div>
+    </div>
+    <div class="quarter">
+      <div class="container red padding-16" id="pendingPolls">
+        <div class="left"><i class="fa fa-comment xxxlarge"></i></div>
+        <div class="right">
+          <h3>52</h3>
+        </div>
+        <div class="clear"></div>
+        <h4>Pending Polls</h4>
+      </div>
+    </div>
+    <div class="quarter">
+      <div class="container blue padding-16">
+        <div class="left"><i class="fa fa-eye xxxlarge"></i></div>
+        <div class="right">
+          <h3>99</h3>
+        </div>
+        <div class="clear"></div>
+        <h4>Closed Polls</h4>
+      </div>
+    </div>
+    <div class="quarter">
+      <div class="container orange text-white padding-16">
+        <div class="left"><i class="fa fa-users xxxlarge"></i></div>
+        <div class="right">
+          <h3>50</h3>
+        </div>
+        <div class="clear"></div>
+        <h4>Friends</h4>
+      </div>
+    </div><br><br>
+  
+  <div class="container createForm">
+    <br>
+    <h5 style="text-align: center;"><b>Create poll form</b></h5>
+    <form action="/polls" method="POST" class="ul card-4 w3-white">
+    
+        <input type="text" id="question" name="poll[question]" class="padding-16" style="width:100%; background-color: white;" placeholder="Question..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: white;" placeholder="Option 1..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: white;" placeholder="Option 2..."><br>
+        <button style="width:100%; color:#009688; background-color:white;"><b>+</b> add another option</button>
+        <input type="number" id="end_date" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: white;" placeholder="Voting period in days..."><br>
+        <input type="number" id="vote_requirement" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: white;" placeholder="Number of votes to close the poll..."><br>
+        <select class="selectpicker form-control" multiple data-max-options="50" name="poll[friends][]" placeholder="Add friends...">
+              <option value="Friend 1" style="width:100%; background-color: white;">Friend 1</option>
+              <option value="Friend 1">Friend 1</option>
+              <option value="Friend 1">Friend 1</option>
+        </select>
+        <input type="submit" id="submitPoll" value="Submit" style="width:100%; background-color: #009688;">
+    </form>
+  </div>
+  
+  <div class="panel">
+    <br>
+    <div class="row-padding" style="margin:0 -16px">
+      <div class="third">
+        <h5><b>General Stats</b></h5>
+        <p>Polls that I voted on</p>
+        <div class="grey">
+          <div class="container center padding orange" style="width:75%">+75%</div>
+        </div>
+
+        <p>Successful polls</p>
+        <div class="grey">
+          <div class="container center padding green" style="width:50%">50%</div>
+        </div>
+
+        <p>Unsuccessful polls</p>
+        <div class="grey">
+          <div class="container center padding red" style="width:25%">25%</div>
+        </div>
+      </div>
+      <div class="twothird">
+        <h5><b>Feeds</b></h5>
+        <table class="table striped white">
+          <tr>
+            <td><i class="fa fa-user text-blue large"></i></td>
+            <td>New record, over 90 views.</td>
+            <td><i>10 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-bell text-red large"></i></td>
+            <td>Database error.</td>
+            <td><i>15 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-users text-yellow large"></i></td>
+            <td>New record, over 40 users.</td>
+            <td><i>17 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-comment text-red large"></i></td>
+            <td>New comments.</td>
+            <td><i>25 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-bookmark text-blue large"></i></td>
+            <td>Check transactions.</td>
+            <td><i>28 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-laptop text-red large"></i></td>
+            <td>CPU overload.</td>
+            <td><i>35 mins</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-share-alt text-green large"></i></td>
+            <td>New shares.</td>
+            <td><i>39 mins</i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <hr>
+
+  <div class="container">
+    <h5><b>Recent Comments</b></h5>
+    <div class="row">
+      <div class="col m2 text-center">
+        <img class="circle" src="/mages/avatar3.png" style="width:96px;height:96px">
+      </div>
+      <div class="col m10 container">
+        <h4>John <span class="opacity medium">Sep 29, 2014, 9:12 PM</span></h4>
+        <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col m2 text-center">
+        <img class="circle" src="/mages/avatar1.png" style="width:96px;height:96px">
+      </div>
+      <div class="col m10 container">
+        <h4>Bo <span class="opacity medium">Sep 28, 2014, 10:15 PM</span></h4>
+        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
+      </div>
+    </div>
+  </div>
+  <br>
+  
+  <!-- Footer -->
+  <footer class="container padding-16 light-grey">
+    <h4>FOOTER</h4>
+    <p>Powered by <a href="https://www.chools.com/ss/default.asp" target="_blank">css</a></p>
+  </footer>
+
+  <!-- End page content -->
+</div>
+
+<script src="./src/index.js"></script>
+
+</body>
+</html>
