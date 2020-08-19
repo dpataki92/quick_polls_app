@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+    include CurrentUserConcern
+
     def create
         user = User.find_by(username: params[:user][:username])
 
@@ -26,6 +28,19 @@ class SessionsController < ApplicationController
             else
                 render json: { message: "Sorry, data validation failed :(" }
             end
+        end
+    end
+
+    def logged_in
+        if @current_user
+            render json: {
+                logged_in: true,
+                user: @current_user
+            }
+        else 
+            render json: {
+                logged_in: false
+            }
         end
     end
 end
