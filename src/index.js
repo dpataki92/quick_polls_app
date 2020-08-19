@@ -7,22 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
 })
 
-
+// renders dashboard with current user's data
+function renderDashboard() {
+    if (!(document.getElementById("loginForm") == null)) {
+        document.getElementById("loginForm").remove();
+  }
+    document.querySelector(".main").style.display = "block";
+    createOrRemoveForm();
+    listPendingForms();
+    logout();
+}
 // handles login process if user is not logged in and displays application content to logged in user 
 function loggedIn() {
-  fetch(`${USERS_URL}/logged_in`)
+  fetch(`${LOGIN_URL}/logged_in`)
     .then(resp => resp.json())
     .then(function (json) {
-      if (json.message === "no") {
+      if (json.logged_in === "false") {
         loggingIn()
-      } else if (json.message === "yes") {
-        if (!(document.getElementById("loginForm") == null)) {
-              document.getElementById("loginForm").remove();
-        }
-        document.querySelector(".main").style.display = "block";
-        createOrRemoveForm();
-        listPendingForms();
-        logout();
+      } else if (json.logged_in === "yes") {
+        renderDashboard()
       }
     })
 }
@@ -100,17 +103,19 @@ function loggingIn() {
         password: password
     })
   }
-  fetch(USERS_URL, configObj)
+  fetch(LOGIN_URL, configObj)
   .then(resp => resp.json())
   .then(
       function(json) {
-        if (json["message"]) {
+        if (json.logged_in === "false") {
           let p = document.createElement("p");
           p.innerHTML = json["message"];
           p.style.color = "red";
           document.querySelector("h2").after(p);
-        } 
-        loggedIn()
+        } else if (json.logged_in === "true") {
+            renderDashboard();
+        }
+        
       }
   )
   })
@@ -299,12 +304,22 @@ function listPendingForms() {
 }
 
 function logout() {
-    fetch(`${USERS_URL}/logout`)
+    let configObj = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+    }
+    fetch(`${LOGIN_URL}/logout`, configObj)
     .then(resp => resp.json())
     .then(
         function(json) {
-          console.log(json)
+          if (json.logged_out === "true") {
+            loggedIn()
+          } else {
+            console.log("Logout has failed")
+          }
         }
     )
-    loggedIn()
 }
