@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // renders dashboard with current user's data
 function renderDashboard() {
+    console.log("Iam here")
+    loggedIn()
     if (!(document.getElementById("loginForm") == null)) {
         document.getElementById("loginForm").remove();
   }
@@ -22,9 +24,9 @@ function loggedIn() {
   fetch(`${LOGIN_URL}/logged_in`)
     .then(resp => resp.json())
     .then(function (json) {
-      if (json.logged_in === "false") {
+      if (json.logged_in === false) {
         loggingIn()
-      } else if (json.logged_in === "yes") {
+      } else if (json.logged_in === true) {
         renderDashboard()
       }
     })
@@ -52,16 +54,16 @@ function createLoginForm() {
   div.appendChild(title);
 
   let form = document.createElement("form");
-  form.action = "/users";
+  form.action = "/sessions";
   form.method = "POST";
   let inputUsername = document.createElement("input");
   inputUsername.type = "text";
-  inputUsername.name = "user[username]";
+  inputUsername.name = "username";
   inputUsername.id = "username";
   inputUsername.placeholder = "Username.."
   let inputPassword = document.createElement("input");
   inputPassword.type = "password";
-  inputPassword.name = "user[password]";
+  inputPassword.name = "password";
   inputPassword.id = "password";
   inputPassword.placeholder = "Password.."
 
@@ -95,7 +97,7 @@ function loggingIn() {
   let configObj = {
     method: "POST",
     headers: {
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json',
         "Accept": "application/json",
     },
     body: JSON.stringify({
@@ -107,12 +109,13 @@ function loggingIn() {
   .then(resp => resp.json())
   .then(
       function(json) {
-        if (json.logged_in === "false") {
+          console.log(json)
+        if (json.logged_in === false) {
           let p = document.createElement("p");
           p.innerHTML = json["message"];
           p.style.color = "red";
           document.querySelector("h2").after(p);
-        } else if (json.logged_in === "true") {
+        } else if (json.logged_in === true) {
             renderDashboard();
         }
         
@@ -304,22 +307,24 @@ function listPendingForms() {
 }
 
 function logout() {
-    let configObj = {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-    }
-    fetch(`${LOGIN_URL}/logout`, configObj)
-    .then(resp => resp.json())
-    .then(
-        function(json) {
-          if (json.logged_out === "true") {
-            loggedIn()
-          } else {
-            console.log("Logout has failed")
-          }
+    
+    document.querySelector(".bar-item").addEventListener("click", ()=> {
+        let configObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
         }
-    )
+        fetch(`${LOGIN_URL}/logout`, configObj)
+        .then(resp => resp.json())
+        .then(
+            function(json) {
+            if (json.logged_out === true) {
+                loggedIn()
+            } else {
+                console.log("Logout has failed")
+            }
+            })
+    })
 }
